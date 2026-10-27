@@ -1,1 +1,1 @@
-{"name":"euromaster-content-studio","version":"1.0.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test"},"engines":{"node":">=20"}}
+{"name":"euromaster-content-studio","version":"1.0.0","private":true,"type":"module","scripts":{"start":"node lib/studio.mjs","test":"node --test"},"engines":{"node":">=20"}}
