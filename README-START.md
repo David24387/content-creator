@@ -17,7 +17,7 @@ Optional können `OPENAI_TEXT_MODEL` und `OPENAI_IMAGE_MODEL` als Umgebungsvaria
 
 ## Referenzen und Formate
 
-Die Ravensburg-Fotos liegen nicht im öffentlichen Repository. Für ein Motiv können bis zu drei geeignete Bilder direkt im Studio gewählt werden. Sie werden zur Bildgenerierung an OpenAI gesendet; dabei gelten dessen Datenbedingungen. Es findet keine dauerhafte Speicherung durch diese Anwendung statt. Die Ausgabe wird im Browser auf das gewählte Format mittig zugeschnitten; dabei können Bildteile verloren gehen. Die Verwendung des offiziellen Logos als separater Overlay-Schritt und Videogenerierung sind noch nicht implementiert.
+Die Ravensburg-Fotos liegen nicht im öffentlichen Repository. Für ein Motiv können bis zu drei geeignete Bilder direkt im Studio gewählt werden. Sie werden zur Bildgenerierung an OpenAI gesendet; dabei gelten dessen Datenbedingungen. Es findet keine dauerhafte Speicherung durch diese Anwendung statt. Die Ausgabe wird im Browser auf das gewählte Format mittig zugeschnitten; dabei können Bildteile verloren gehen. Im Modus „Infopost“ werden Texte auf einem blauen Verlauf gesetzt; optional kann ein Original-Logo hochgeladen werden. Montserrat wird über Google Fonts geladen und benötigt eine Internetverbindung. Die Infopost-Texte werden direkt eingegeben. Videogenerierung ist noch nicht implementiert.
 
 ## Grenzen
 
