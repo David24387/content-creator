@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {imageSize, validate, makeServer} from './server.mjs';
+import {imageSize, validate, makeServer} from './lib/studio.mjs';
 test('formats use appropriate generation orientation',()=>{assert.equal(imageSize(1080,1350),'1024x1536');assert.equal(imageSize(1080,1080),'1024x1024');assert.equal(imageSize(1920,1080),'1536x1024')});
 test('input rejects invalid values and accepts valid form',()=>{const x={kind:'image',prompt:'Werkstatt',channel:'instagram',width:1080,height:1350,references:[]};assert.doesNotThrow(()=>validate(x));assert.throws(()=>validate({...x,channel:'other'}));assert.throws(()=>validate({...x,width:20000}));assert.throws(()=>validate({...x,references:['data:text/html;base64,AAAA']}))});
 test('server provides health and reports missing key',async()=>{const old=process.env.OPENAI_API_KEY;delete process.env.OPENAI_API_KEY;const server=makeServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));try{const base=`http://127.0.0.1:${server.address().port}`;assert.equal((await (await fetch(base+'/health')).json()).configured,false);const r=await fetch(base+'/api/generate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'caption',prompt:'Winter',channel:'linkedin',width:1080,height:1350,references:[]})});assert.equal(r.status,400);assert.match((await r.json()).error,/OPENAI_API_KEY/)}finally{await new Promise(r=>server.close(r));if(old!==undefined)process.env.OPENAI_API_KEY=old}});
