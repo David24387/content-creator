@@ -1,18 +1,19 @@
 # EUROMASTER Content Studio
 
-Geplantes Content-Studio für Instagram, Facebook und LinkedIn.
+Erste lokale Version für Fotomotive, Infoposts und Beitragstexte für Instagram, Facebook und LinkedIn.
 
-## Ziel
+## Aktueller Stand
 
-- Briefing in eigenen Worten und optionale Referenzbilder
-- Kanalwahl mit Du-Ansprache für Instagram und Facebook und Sie-Ansprache für LinkedIn
-- Bild- und Videogenerierung, Varianten und Download in passenden Formaten
-- Original-Logo als separate Vorlage statt KI-generierter Nachzeichnung
+- **Infoposts:** Blauer Verlauf von #144c9f nach #0c7ac5, Montserrat, optionale gelbe Verlaufsschrift und Original-Logo-Upload; PNG-Export.
+- **Fotomotive:** Bildgenerierung mit optionalen Referenzbildern und Formatauswahl.
+- **Beitragstexte:** Du-Ansprache für Instagram und Facebook, Sie-Ansprache für LinkedIn.
 
-## Technische Grundlagen
+Die Anwendung ist **noch nicht online veröffentlicht**. Sie läuft derzeit lokal. Der Infopost-Modus benötigt keinen API-Schlüssel. Für KI-generierte Bilder und Texte sind ein OpenAI-API-Konto und ein serverseitig hinterlegter API-Schlüssel nötig; echte API-Anfragen sind noch nicht getestet. Videogenerierung ist noch nicht implementiert.
 
-GitHub speichert den Quellcode. Für Bild- und Videogenerierung sind ein KI-Anbieter, ein geschütztes Backend, sichere Zugangsdaten und gegebenenfalls ein Abrechnungskonto erforderlich. GitHub Pages allein führt keinen geschützten Backend-Code aus. Keine API-Schlüssel oder vertraulichen Referenzbilder im Repository speichern.
+## Dateien und Start
 
-## Status
+- [Oberfläche](public/index.html)
+- [Server](server.mjs)
+- [Anleitung zum lokalen Start](README-START.md)
 
-Projekt angelegt. Anbieter, Hosting und Referenzmaterial sind noch festzulegen. Es ist noch keine Generierungsfunktion implementiert.
+Die Ravensburg-Bilder und API-Schlüssel liegen nicht im öffentlichen Repository. Die Anwendung ist ausschließlich für den lokalen Betrieb ausgelegt; für eine öffentliche Nutzung benötigt sie ein geschütztes Backend und Zugriffskontrolle.
