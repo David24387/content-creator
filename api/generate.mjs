@@ -28,7 +28,12 @@ export default async function handler(req,res) {
       const caption=parts.map(x=>x.text).join('\n').trim();
       const sources=parts.flatMap(x=>x.annotations||[]).filter(x=>x.type==='url_citation').map(x=>({title:x.title,url:x.url}));
       if(!caption) throw new Error('Keine Rechercheergebnisse erhalten.');
-      return res.status(200).json({caption,sources});
+      const draft=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+process.env.OPENAI_API_KEY},body:JSON.stringify({model:process.env.OPENAI_TEXT_MODEL||'gpt-4.1-mini',instructions:'Formuliere ausschließlich aus dem gelieferten Recherchetext eine kurze deutsche Überschrift (maximal 80 Zeichen) und eine prägnante Erklärung (maximal 300 Zeichen) für eine Social-Media-Grafik. Keine Fakten ergänzen.',input:caption,text:{format:{type:'json_schema',name:'infopost',strict:true,schema:{type:'object',properties:{title:{type:'string'},body:{type:'string'}},required:['title','body'],additionalProperties:false}}}})});
+      const drafted=await draft.json(); if(!draft.ok) throw new Error(drafted.error?.message||'Textentwurf fehlgeschlagen.');
+      const raw=(drafted.output||[]).flatMap(x=>x.content||[]).filter(x=>x.type==='output_text').map(x=>x.text).join('');
+      const post=JSON.parse(raw);
+      if(typeof post.title!=='string'||typeof post.body!=='string'||!post.title.trim()||post.title.length>100||post.body.length>350) throw new Error('Der Textvorschlag passt nicht in die Grafik. Bitte erneut versuchen.');
+      return res.status(200).json({caption,sources,post});
     }
     const result=await generate(data);
     return res.status(200).json(result);
