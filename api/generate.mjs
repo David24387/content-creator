@@ -1,5 +1,5 @@
 import { timingSafeEqual, createHash } from 'node:crypto';
-import { generate } from '../server.mjs';
+import { generate } from '../lib/studio.mjs';
 
 export const config = { maxDuration: 120 };
 function equal(a,b) {
