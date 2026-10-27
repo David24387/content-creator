@@ -26,7 +26,7 @@ async function openai(endpoint, options) {
   if (!response.ok) throw new Error(`KI-Anfrage fehlgeschlagen (${response.status}): ${result.error?.message || 'Bitte später erneut versuchen.'}`);
   return result;
 }
-async function generate(data) {
+export async function generate(data) {
   validate(data);
   if(data.kind==='caption') {
     const out=await openai('responses',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:process.env.OPENAI_TEXT_MODEL || 'gpt-4.1-mini',instructions,input:`Kanal: ${channels[data.channel]}\nBriefing: ${data.prompt}`})});
@@ -37,10 +37,10 @@ async function generate(data) {
   const prompt=`Erstelle ein authentisches, hochwertiges Social-Media-Foto für EUROMASTER. Dokumentarischer, natürlicher Werkstatt-Look, realistische Fahrzeuge und Reifen, echte Arbeitssituationen. Falls Referenzbilder beigefügt sind, nutze sie als Orientierung für Arbeitskleidung und Umgebung. Keine erfundenen Schriftzüge, Logos oder lesbaren Namensschilder. Motiv: ${data.prompt}`;
   const size=imageSize(data.width,data.height); let result;
   if(data.references.length) {
-    const form=new FormData(); form.set('model',process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2.5-flare'); form.set('prompt',prompt); form.set('size',size);
+    const form=new FormData(); form.set('model',process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1'); form.set('prompt',prompt); form.set('size',size);
     data.references.forEach((ref,i)=>{const [,mime,b64]=ref.match(/^data:(image\/(?:jpeg|png|webp));base64,(.+)$/);form.append('image[]',new Blob([Buffer.from(b64,'base64')],{type:mime}),`reference-${i}.${mime==='image/jpeg'?'jpg':mime.split('/')[1]}`);});
     result=await openai('images/edits',{method:'POST',body:form});
-  } else result=await openai('images/generations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2.5-flare',prompt,size})});
+  } else result=await openai('images/generations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1',prompt,size})});
   if (!result.data?.[0]?.b64_json) throw new Error('Es wurde kein Bild zurückgegeben.');
   return {image:`data:image/png;base64,${result.data[0].b64_json}`};
 }
